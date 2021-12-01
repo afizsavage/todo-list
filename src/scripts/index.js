@@ -5,18 +5,15 @@ const todos = [
   { description: 'Build car', completed: false, index: 1 },
   { description: 'Party', completed: false, index: 2 },
 ];
-const list = document.querySelector('ul');
+const list = document.createElement('ul');
+const todoParent = document.querySelector('body div');
+todoParent.id = 'parent';
+const button = document.createElement('button');
 
 const addHeading = () => {
   const heading = document.createElement('h1');
   heading.textContent = 'Today,s Todo';
   return heading;
-};
-
-const addTopElements = () => {
-  const input = document.createElement('input');
-  document.body.insertBefore(addHeading(), list);
-  document.body.insertBefore(input, list);
 };
 
 const createTodoList = () => {
@@ -26,6 +23,17 @@ const createTodoList = () => {
     <label>${todo.description}</label></li> `;
     list.innerHTML = listItem;
   });
+  todoParent.appendChild(list);
+};
+
+const addTopElements = () => {
+  const headerParent = document.createElement('div');
+  const input = document.createElement('input');
+  headerParent.classList.add('handb');
+  headerParent.appendChild(addHeading());
+  input.placeholder = 'Add to your list...';
+  todoParent.appendChild(headerParent);
+  todoParent.appendChild(input);
 };
 
 const load = () => {
