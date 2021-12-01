@@ -31,6 +31,7 @@ const createAddTodoForm = () => {
   const addTodoForm = document.createElement('form');
   const addInput = document.createElement('input');
   const submitButton = document.createElement('input');
+  const icon = `<i class="fas fa-level-down-alt"></i>`;
 
   addTodoForm.classList.add('handb');
   addInput.id = 'add';
@@ -38,6 +39,7 @@ const createAddTodoForm = () => {
   submitButton.type = 'submit';
   submitButton.id = 'submit';
   submitButton.title = 'Click this or press enter to submit';
+  submitButton.className = 'fas fa-level-down-alt trn';
 
   addTodoForm.appendChild(addInput);
   addTodoForm.appendChild(submitButton);
@@ -49,6 +51,7 @@ const createTodoList = () => {
   todos.forEach((todo) => {
     listItem += `<li class="handb txtarea"> <button class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
     <textarea id="todo" name="todo"></textarea></div>
+    <i class="fas fa-ellipsis-v ic"></i>
     </li> `;
     list.innerHTML = listItem;
   });
