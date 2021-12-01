@@ -1,4 +1,8 @@
 import '../styles/styles.css';
+import '@fortawesome/fontawesome-free/js/fontawesome.js';
+import '@fortawesome/fontawesome-free/js/solid.js';
+import '@fortawesome/fontawesome-free/js/regular.js';
+import '@fortawesome/fontawesome-free/js/brands.js';
 
 const todos = [
   { description: 'Build house', completed: false, index: 0 },
@@ -10,34 +14,50 @@ const todoParent = document.querySelector('body div');
 todoParent.id = 'parent';
 const button = document.createElement('button');
 
-const addHeading = () => {
+const addTodoHeader = () => {
+  const headerParent = document.createElement('div');
   const heading = document.createElement('h1');
+  const refreshIcon = document.createElement('i');
+
+  headerParent.classList.add('handb');
+  refreshIcon.className = 'fas fa-sync';
   heading.textContent = 'Today,s Todo';
-  return heading;
+  headerParent.appendChild(heading);
+  headerParent.appendChild(refreshIcon);
+  todoParent.appendChild(headerParent);
+};
+
+const createAddTodoForm = () => {
+  const addTodoForm = document.createElement('form');
+  const addInput = document.createElement('input');
+  const submitButton = document.createElement('input');
+
+  addTodoForm.classList.add('handb');
+  addInput.id = 'add';
+  addInput.placeholder = 'Add to your list...';
+  submitButton.type = 'submit';
+  submitButton.id = 'submit';
+  submitButton.title = 'Click this or press enter to submit';
+
+  addTodoForm.appendChild(addInput);
+  addTodoForm.appendChild(submitButton);
+  todoParent.appendChild(addTodoForm);
 };
 
 const createTodoList = () => {
   let listItem = '';
   todos.forEach((todo) => {
-    listItem += `<li> <input type="checkbox" id="C" name="C" value="C"/>  
-    <label>${todo.description}</label></li> `;
+    listItem += `<li class="handb txtarea"> <button class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
+    <textarea id="todo" name="todo"></textarea></div>
+    </li> `;
     list.innerHTML = listItem;
   });
   todoParent.appendChild(list);
 };
 
-const addTopElements = () => {
-  const headerParent = document.createElement('div');
-  const input = document.createElement('input');
-  headerParent.classList.add('handb');
-  headerParent.appendChild(addHeading());
-  input.placeholder = 'Add to your list...';
-  todoParent.appendChild(headerParent);
-  todoParent.appendChild(input);
-};
-
 const load = () => {
-  addTopElements();
+  addTodoHeader();
+  createAddTodoForm();
   createTodoList();
 };
 
