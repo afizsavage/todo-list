@@ -12,7 +12,6 @@ const todos = [
 const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 todoParent.id = 'parent';
-const button = document.createElement('button');
 
 const addTodoHeader = () => {
   const headerParent = document.createElement('div');
@@ -21,7 +20,7 @@ const addTodoHeader = () => {
 
   headerParent.classList.add('handb');
   refreshIcon.className = 'fas fa-sync';
-  heading.textContent = 'Today,s Todo';
+  heading.textContent = 'Today,s To Do';
   headerParent.appendChild(heading);
   headerParent.appendChild(refreshIcon);
   todoParent.appendChild(headerParent);
@@ -31,7 +30,6 @@ const createAddTodoForm = () => {
   const addTodoForm = document.createElement('form');
   const addInput = document.createElement('input');
   const submitButton = document.createElement('input');
-  const icon = `<i class="fas fa-level-down-alt"></i>`;
 
   addTodoForm.classList.add('handb');
   addInput.id = 'add';
@@ -58,10 +56,21 @@ const createTodoList = () => {
   todoParent.appendChild(list);
 };
 
+const addCompletedButton = () => {
+  const parentElement = document.createElement('div');
+  const button = document.createElement('button');
+
+  parentElement.className = 'btnp';
+  button.textContent = 'Clear all completed';
+  parentElement.appendChild(button);
+  todoParent.appendChild(parentElement);
+};
+
 const load = () => {
   addTodoHeader();
   createAddTodoForm();
   createTodoList();
+  addCompletedButton();
 };
 
 window.onload = load;

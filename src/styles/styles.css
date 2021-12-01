@@ -114,3 +114,21 @@ ul {
   font-size: 10px;
   transform: rotateZ(90deg);
 }
+
+.btnp {
+  width: 100%;
+  height: 60px;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnp button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  text-decoration: underline;
+  font-size: 15px;
+  font-weight: 300;
+}
