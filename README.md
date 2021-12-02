@@ -33,9 +33,15 @@ To get a local copy up and running follow these simple example steps.
     - `todo-list`
     - `ls -la`
 
+4.  run `npm install` on the command line to download all dependency packages.
+
 ### Run
 
-Open the index.html file in the a browser
+1. run `npm run build` to build the static `dist` folder.
+
+2. run `npm start` to serve the static folder with webpack-dev-server.
+
+3. webpack-dev-server will automatically open `http://localhost:8080/` in your default browser.
 
 ## Author
 
