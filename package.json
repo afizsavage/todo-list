@@ -1,8 +1,8 @@
 {
-  "name": "webpack-boilerplate",
+  "name": "todo-list",
   "version": "1.0.0",
   "description": "![](https://img.shields.io/badge/Microverse-blueviolet)",
-  "private": true,
+  "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/afizsavage/webpack-boilerplate.git"
+    "url": "git+https://github.com/afizsavage/todo-list.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/afizsavage/webpack-boilerplate/issues"
+    "url": "https://github.com/afizsavage/todo-list/issues"
   },
-  "homepage": "https://github.com/afizsavage/webpack-boilerplate#readme",
+  "homepage": "https://github.com/afizsavage/todo-list#readme",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.5.1",
@@ -36,5 +36,8 @@
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.6.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4"
   }
 }

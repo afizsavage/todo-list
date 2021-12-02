@@ -1,3 +1,134 @@
-.dark {
-  background: #000;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#parent {
+  list-style: none;
+  width: 30%;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+  color: #545862;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+#add {
+  font-style: italic;
+}
+
+#submit {
+  background-image: url('http://www.getminimalist.com/assets/enter-b06ec7fb441bc0e40d61ba975a0291ad.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+input {
+  border: none;
+  font-size: 15px;
+  width: 100%;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.handb {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 0 1rem;
+  color: #545862;
+  font-size: 15px;
+}
+
+.tick {
+  height: 16px;
+  width: 16px;
+  background: #fff;
+  border: 2px solid #c1c1c3;
+  outline: none;
+  margin-right: 1rem;
+}
+
+.txtarea {
+  justify-content: start;
+  padding-right: 0;
+}
+
+.center {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.center label {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 0;
+}
+
+.center textarea {
+  display: none;
+  width: 100%;
+  border: 0;
+  padding: 5px 0;
+}
+
+.ic {
+  display: inline-block;
+  stroke: #545862;
+  margin-left: 1rem;
+  height: 50px;
+  padding: 0 1rem;
+  box-sizing: content-box;
+}
+
+.trn {
+  font-size: 10px;
+  transform: rotateZ(90deg);
+}
+
+.btnp {
+  width: 100%;
+  height: 60px;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnp button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  text-decoration: underline;
+  font-size: 15px;
+  font-weight: 300;
 }

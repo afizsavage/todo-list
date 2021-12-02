@@ -1,76 +1,56 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Project Name
+# Todo List
 
-> One paragraph statement about the project.
+> This is a minimal yet powerful to-do list.
 
-![screenshot](./app_screenshot.png)
+![screenshot](./src/assets/app_screenshot.png)
 
-Additional description about the project and its features.
+The application has functionality to add, remove, mark as completed, and reorder todo item.
 
 ## Built With
 
-- Major languages
-- Frameworks
-- Technologies used
-
-## Live Demo
-
-[Live Demo Link](https://livedemo.com)
-
+- HTML
+- CSS
+- Javascript
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
-
-
 To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
 
 ### Setup
 
-### Install
+1.  Open a terminal, navigate to the directory that you would like to clone the repository into using commands like:
 
-### Usage
+    - `cd /pathname` to change your working directory.
 
-### Run tests
+2.  Next, clone the remote repository and create a local copy on your machine using this command:
 
-### Deployment
+    - `git clone https://github.com/afizsavage/todo-list`
 
+3.  Now you can see the contents of the remote repository on your machine by moving into the newly cloned directory:
 
+    - `todo-list`
+    - `ls -la`
 
-## Authors
+4.  run `npm install` on the command line to download all dependency packages.
 
-👤 **Author1**
+### Run
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
+1. run `npm run build` to build the static `dist` folder.
 
-👤 **Author2**
+2. run `npm start` to serve the static folder with webpack-dev-server.
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
+3. webpack-dev-server will automatically open `http://localhost:8080/` in your default browser.
 
-## 🤝 Contributing
+## Author
 
-Contributions, issues, and feature requests are welcome!
+👤 **Afiz Savage**
 
-Feel free to check the [issues page](../../issues/).
+- GitHub: [@afizsavage](https://github.com/afizsavage)
+- Twitter: [@fizzo_geek](https://twitter.com/fizzo_geek)
+- LinkedIn: [@afiz-savage](https://www.linkedin.com/in/afiz-savage-3b91a21ba/)
 
 ## Show your support
 
 Give a ⭐️ if you like this project!
-
-## Acknowledgments
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
-
-## 📝 License
-
-This project is [MIT](./MIT.md) licensed.
