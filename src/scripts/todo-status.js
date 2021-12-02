@@ -1,5 +1,6 @@
 const updateCompletedStatus = (todos) => {
   const statusButtons = document.querySelectorAll('.tick');
+  const storage = window.localStorage;
 
   const tickAsCompleted = (btn) => {
     btn.classList.toggle('check');
@@ -11,6 +12,7 @@ const updateCompletedStatus = (todos) => {
     } else {
       todoArray[index].completed = false;
     }
+    storage.setItem('todos', JSON.stringify(todoArray));
   };
 
   statusButtons.forEach((button, index) => {

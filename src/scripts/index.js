@@ -5,14 +5,24 @@ import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
 import updateCompletedStatus from './todo-status.js';
 
-const todos = [
+let todosArray = [
   { description: 'Build house', completed: false, index: 0 },
   { description: 'Build car', completed: false, index: 1 },
   { description: 'Party', completed: false, index: 2 },
 ];
 const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
+const storage = window.localStorage;
+const storedTodos = JSON.parse(storage.getItem('todos'));
+
 todoParent.id = 'parent';
+
+let todos;
+if (storage.getItem('todos') === null) {
+  todos = todosArray;
+} else {
+  todos = [...storedTodos];
+}
 
 const addTodoHeader = () => {
   const headerParent = document.createElement('div');
@@ -47,11 +57,19 @@ const createAddTodoForm = () => {
 
 const createTodoList = () => {
   let listItem = '';
+
   todos.forEach((todo) => {
-    listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
-    <textarea id="todo" name="todo"></textarea></div>
-    <i class="fas fa-ellipsis-v ic"></i>
-    </li> `;
+    if (todo.completed === true) {
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label for="todo">${todo.description}</label>
+      <textarea id="todo" name="todo"></textarea></div>
+      <i class="fas fa-ellipsis-v ic"></i>
+      </li> `;
+    } else {
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
+      <textarea id="todo" name="todo"></textarea></div>
+      <i class="fas fa-ellipsis-v ic"></i>
+      </li> `;
+    }
     list.innerHTML = listItem;
   });
   todoParent.appendChild(list);
