@@ -73,6 +73,14 @@ ul {
   border: 2px solid #c1c1c3;
   outline: none;
   margin-right: 1rem;
+  cursor: pointer;
+}
+
+.check {
+  background-image: url('../assets/check.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border: none;
 }
 
 .txtarea {

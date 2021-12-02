@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
+import updateCompletedStatus from './todo-status.js';
 
 const todos = [
   { description: 'Build house', completed: false, index: 0 },
@@ -47,7 +48,7 @@ const createAddTodoForm = () => {
 const createTodoList = () => {
   let listItem = '';
   todos.forEach((todo) => {
-    listItem += `<li class="handb txtarea"> <button class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
+    listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
     <textarea id="todo" name="todo"></textarea></div>
     <i class="fas fa-ellipsis-v ic"></i>
     </li> `;
@@ -71,6 +72,7 @@ const load = () => {
   createAddTodoForm();
   createTodoList();
   addCompletedButton();
+  updateCompletedStatus();
 };
 
 window.onload = load;
