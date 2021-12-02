@@ -72,7 +72,7 @@ const load = () => {
   createAddTodoForm();
   createTodoList();
   addCompletedButton();
-  updateCompletedStatus();
+  updateCompletedStatus(todos);
 };
 
 window.onload = load;
