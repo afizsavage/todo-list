@@ -3,7 +3,9 @@ const updateCompletedStatus = (todos) => {
   const storage = window.localStorage;
 
   const tickAsCompleted = (btn) => {
+    const todoLabel = btn.nextElementSibling.firstChild;
     btn.classList.toggle('check');
+    todoLabel.classList.toggle('fade');
   };
 
   const updateTodosArray = (todoArray, index, button) => {

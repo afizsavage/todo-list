@@ -102,6 +102,11 @@ ul {
   padding: 1rem 0;
 }
 
+.fade {
+  color: rgba(0, 0, 0, 0.45);
+  text-decoration: line-through;
+}
+
 .center textarea {
   display: none;
   width: 100%;

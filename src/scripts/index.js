@@ -5,7 +5,7 @@ import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
 import updateCompletedStatus from './todo-status.js';
 
-let todosArray = [
+const todosArray = [
   { description: 'Build house', completed: false, index: 0 },
   { description: 'Build car', completed: false, index: 1 },
   { description: 'Party', completed: false, index: 2 },
@@ -60,12 +60,12 @@ const createTodoList = () => {
 
   todos.forEach((todo) => {
     if (todo.completed === true) {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label for="todo">${todo.description}</label>
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for="todo">${todo.description}</label>
       <textarea id="todo" name="todo"></textarea></div>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     } else {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label for="todo">${todo.description}</label>
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for="todo">${todo.description}</label>
       <textarea id="todo" name="todo"></textarea></div>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
