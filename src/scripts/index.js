@@ -5,13 +5,13 @@ import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
 
 import updateCompletedStatus from './todo-status.js';
-import addNewTodo from './add-todo.js';
+import { addNewTodo, editTodoDescription } from './update-todos.js';
 
 const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
-const submitButton = document.createElement('input');
 const addTodoForm = document.createElement('form');
+let descriptions;
 
 todoParent.id = 'parent';
 
@@ -39,6 +39,7 @@ const addTodoHeader = () => {
 
 const createAddTodoForm = () => {
   const addInput = document.createElement('input');
+  const submitButton = document.createElement('input');
 
   addTodoForm.classList.add('handb');
   addInput.id = 'add';
@@ -67,6 +68,14 @@ const generateTodoTemplate = (todoParam, listParam) => {
     }
     list.innerHTML = listParam;
   });
+  descriptions = document.querySelectorAll('.center label');
+
+  descriptions.forEach((description) => {
+    description.addEventListener('click', () => {
+      console.log('clicked');
+    });
+  });
+  console.log(descriptions);
 };
 
 const createTodoList = () => {
@@ -79,7 +88,7 @@ const createTodoList = () => {
     addNewTodo(todos);
     generateTodoTemplate(todos, listItem);
     storage.setItem('todos', JSON.stringify(todos));
-    console.log(todos, todos);
+    updateCompletedStatus(todos);
   });
 };
 
@@ -99,6 +108,14 @@ const load = () => {
   createTodoList();
   addCompletedButton();
   updateCompletedStatus(todos);
+  // editTodoDescription();
+  descriptions = document.querySelectorAll('.center label');
+  descriptions.forEach((description) => {
+    description.addEventListener('click', () => {
+      console.log('clicked');
+    });
+  });
+  console.log(descriptions);
 };
 
 window.onload = load;
