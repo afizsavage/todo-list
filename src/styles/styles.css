@@ -35,9 +35,17 @@ h1 {
 }
 
 #submit {
-  background-image: url('http://www.getminimalist.com/assets/enter-b06ec7fb441bc0e40d61ba975a0291ad.png');
+  background-image: url('../assets/to-left.png');
+  background-size: 30%;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: inherit;
+  width: 40px;
+  height: 100%;
+  display: inline-block;
+  cursor: pointer;
+  text-indent: -99999px;
+  padding: 0 0.2rem;
 }
 
 input {
@@ -144,4 +152,8 @@ ul {
   text-decoration: underline;
   font-size: 15px;
   font-weight: 300;
+}
+
+form.handb {
+  padding-right: 0;
 }

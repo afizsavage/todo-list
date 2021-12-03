@@ -3,24 +3,24 @@ import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
-import updateCompletedStatus from './todo-status.js';
 
-const todosArray = [
-  { description: 'Build house', completed: false, index: 0 },
-  { description: 'Build car', completed: false, index: 1 },
-  { description: 'Party', completed: false, index: 2 },
-];
+import updateCompletedStatus from './todo-status.js';
+import addNewTodo from './add-todo.js';
+
 const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
-const storedTodos = JSON.parse(storage.getItem('todos'));
+const submitButton = document.createElement('input');
+const addTodoForm = document.createElement('form');
 
 todoParent.id = 'parent';
 
 let todos;
 if (storage.getItem('todos') === null) {
-  todos = todosArray;
+  todos = [];
 } else {
+  const storedTodos = JSON.parse(storage.getItem('todos'));
+
   todos = [...storedTodos];
 }
 
@@ -38,9 +38,7 @@ const addTodoHeader = () => {
 };
 
 const createAddTodoForm = () => {
-  const addTodoForm = document.createElement('form');
   const addInput = document.createElement('input');
-  const submitButton = document.createElement('input');
 
   addTodoForm.classList.add('handb');
   addInput.id = 'add';
@@ -48,31 +46,41 @@ const createAddTodoForm = () => {
   submitButton.type = 'submit';
   submitButton.id = 'submit';
   submitButton.title = 'Click this or press enter to submit';
-  submitButton.className = 'fas fa-level-down-alt trn';
 
   addTodoForm.appendChild(addInput);
   addTodoForm.appendChild(submitButton);
   todoParent.appendChild(addTodoForm);
 };
 
-const createTodoList = () => {
-  let listItem = '';
-
-  todos.forEach((todo) => {
+const generateTodoTemplate = (todoParam, listParam) => {
+  todoParam.forEach((todo) => {
     if (todo.completed === true) {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for="todo">${todo.description}</label>
+      listParam += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for="todo">${todo.description}</label>
       <textarea id="todo" name="todo"></textarea></div>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     } else {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for="todo">${todo.description}</label>
+      listParam += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for="todo">${todo.description}</label>
       <textarea id="todo" name="todo"></textarea></div>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     }
-    list.innerHTML = listItem;
+    list.innerHTML = listParam;
   });
+};
+
+const createTodoList = () => {
+  const listItem = '';
+
+  generateTodoTemplate(todos, listItem);
   todoParent.appendChild(list);
+  addTodoForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    addNewTodo(todos);
+    generateTodoTemplate(todos, listItem);
+    storage.setItem('todos', JSON.stringify(todos));
+    console.log(todos, todos);
+  });
 };
 
 const addCompletedButton = () => {
