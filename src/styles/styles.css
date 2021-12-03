@@ -73,6 +73,14 @@ ul {
   border: 2px solid #c1c1c3;
   outline: none;
   margin-right: 1rem;
+  cursor: pointer;
+}
+
+.check {
+  background-image: url('../assets/check.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border: none;
 }
 
 .txtarea {
@@ -92,6 +100,11 @@ ul {
   width: 100%;
   height: 100%;
   padding: 1rem 0;
+}
+
+.fade {
+  color: rgba(0, 0, 0, 0.45);
+  text-decoration: line-through;
 }
 
 .center textarea {
