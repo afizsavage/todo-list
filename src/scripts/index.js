@@ -69,7 +69,6 @@ const generateTodoTemplate = (todoParam) => {
     }
     list.innerHTML = listItem;
   });
-  console.log(list, todoParent);
 
   editTodoDescription(todoParam);
 };

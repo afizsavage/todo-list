@@ -1,4 +1,7 @@
-import updateCompletedStatus from './todo-status';
+import updateCompletedStatus from './todo-status.js';
+
+const storage = window.localStorage;
+let generateTodo;
 
 class Todo {
   constructor(description, completed, index) {
@@ -7,8 +10,41 @@ class Todo {
     this.index = index;
   }
 }
-const generateTodo = (todos) => {
-  const list = document.getElementsByTagName('ul');
+
+const editLabel = (todosParam, index, des, event) => {
+  event.preventDefault();
+  event.target.classList.remove('show');
+  des.classList.remove('hide');
+  des.parentNode.parentNode.classList.remove('edit');
+  todosParam[index].description = event.target.value;
+  const yew = todosParam.filter((to) => to.description !== '');
+  storage.setItem('todos', JSON.stringify(yew));
+  generateTodo(yew);
+  event.target.parentNode.parentNode.remove();
+};
+
+export const editTodoDescription = (todos) => {
+  const descriptions = document.querySelectorAll('.center label');
+
+  descriptions.forEach((description, index) => {
+    description.addEventListener('click', () => {
+      description.nextElementSibling.classList.add('show');
+      description.parentNode.parentNode.classList.add('edit');
+      description.classList.add('hide');
+      description.nextElementSibling.addEventListener('keyup', (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          editLabel(todos, index, description, event);
+        }
+      });
+      description.nextElementSibling.addEventListener('blur', (event) => {
+        editLabel(todos, index, description, event);
+      });
+    });
+  });
+};
+
+generateTodo = (todos) => {
   const todoParent = document.getElementById('parent');
   let listItem = '';
   todos.forEach((todo) => {
@@ -27,30 +63,6 @@ const generateTodo = (todos) => {
   });
   updateCompletedStatus(todos);
   editTodoDescription(todos);
-};
-
-export const editTodoDescription = (todos) => {
-  const storage = window.localStorage;
-  const descriptions = document.querySelectorAll('.center label');
-
-  descriptions.forEach((description, index) => {
-    description.addEventListener('click', () => {
-      description.parentNode.parentNode.classList.add('edit');
-      description.classList.add('hide');
-      description.nextElementSibling.classList.add('show');
-      description.nextElementSibling.addEventListener('keyup', (event) => {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          description.classList.remove('hide');
-          event.target.classList.remove('show');
-          description.parentNode.parentNode.classList.remove('edit');
-          todos[index].description = event.target.value;
-          storage.setItem('todos', JSON.stringify(todos));
-          generateTodo(todos);
-        }
-      });
-    });
-  });
 };
 
 export const addNewTodo = (todos) => {
