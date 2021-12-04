@@ -11,7 +11,6 @@ const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
 const addTodoForm = document.createElement('form');
-let descriptions;
 
 todoParent.id = 'parent';
 
@@ -53,40 +52,37 @@ const createAddTodoForm = () => {
   todoParent.appendChild(addTodoForm);
 };
 
-const generateTodoTemplate = (todoParam, listParam) => {
+const generateTodoTemplate = (todoParam) => {
+  let listItem = '';
+
   todoParam.forEach((todo) => {
     if (todo.completed === true) {
-      listParam += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for="todo">${todo.description}</label>
-      <textarea id="todo" name="todo"></textarea></div>
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
+      <input id=${todo.description} name="todo"></input></div>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     } else {
-      listParam += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for="todo">${todo.description}</label>
-      <textarea id="todo" name="todo"></textarea></div>
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
+      <input id=${todo.description} name="todo"></input></div>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     }
-    list.innerHTML = listParam;
+    list.innerHTML = listItem;
   });
-  descriptions = document.querySelectorAll('.center label');
+  console.log(list, todoParent);
 
-  descriptions.forEach((description) => {
-    description.addEventListener('click', () => {
-      console.log('clicked');
-    });
-  });
-  console.log(descriptions);
+  editTodoDescription(todoParam);
 };
 
 const createTodoList = () => {
-  const listItem = '';
+  // const listItem = '';
 
-  generateTodoTemplate(todos, listItem);
+  generateTodoTemplate(todos);
   todoParent.appendChild(list);
   addTodoForm.addEventListener('submit', (event) => {
     event.preventDefault();
     addNewTodo(todos);
-    generateTodoTemplate(todos, listItem);
+    generateTodoTemplate(todos);
     storage.setItem('todos', JSON.stringify(todos));
     updateCompletedStatus(todos);
   });
@@ -108,14 +104,7 @@ const load = () => {
   createTodoList();
   addCompletedButton();
   updateCompletedStatus(todos);
-  // editTodoDescription();
-  descriptions = document.querySelectorAll('.center label');
-  descriptions.forEach((description) => {
-    description.addEventListener('click', () => {
-      console.log('clicked');
-    });
-  });
-  console.log(descriptions);
+  editTodoDescription(todos);
 };
 
 window.onload = load;
