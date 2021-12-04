@@ -99,10 +99,14 @@ const addCompletedButton = () => {
   // notCompleted.forEach((item, index) => list.children[index].remove());
 };
 
-button.addEventListener('click', () => {
+const clearAllCompleted = () => {
   const notCompleted = todos.filter((todo) => !todo.completed);
   storage.setItem('todos', JSON.stringify(notCompleted));
   window.location.reload();
+};
+
+button.addEventListener('click', () => {
+  clearAllCompleted();
 });
 
 const load = () => {

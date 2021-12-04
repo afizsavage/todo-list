@@ -11,16 +11,20 @@ class Todo {
   }
 }
 
+const deleteTodo = (allTodo, event) => {
+  const yew = allTodo.filter((to) => to.description !== '');
+  storage.setItem('todos', JSON.stringify(yew));
+  generateTodo(yew);
+  event.target.parentNode.parentNode.remove();
+};
+
 const editLabel = (todosParam, index, des, event) => {
   event.preventDefault();
   event.target.classList.remove('show');
   des.classList.remove('hide');
   des.parentNode.parentNode.classList.remove('edit');
   todosParam[index].description = event.target.value;
-  const yew = todosParam.filter((to) => to.description !== '');
-  storage.setItem('todos', JSON.stringify(yew));
-  generateTodo(yew);
-  event.target.parentNode.parentNode.remove();
+  deleteTodo(todosParam, event);
 };
 
 export const editTodoDescription = (todos) => {
