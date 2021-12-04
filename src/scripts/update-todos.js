@@ -1,7 +1,4 @@
-import updateCompletedStatus from './todo-status.js';
-
 const storage = window.localStorage;
-let generateTodo;
 
 class Todo {
   constructor(description, completed, index) {
@@ -11,11 +8,10 @@ class Todo {
   }
 }
 
-const deleteTodo = (allTodo, event) => {
+const deleteTodo = (allTodo) => {
   const yew = allTodo.filter((to) => to.description !== '');
   storage.setItem('todos', JSON.stringify(yew));
-  generateTodo(yew);
-  event.target.parentNode.parentNode.remove();
+  window.location.reload();
 };
 
 const editLabel = (todosParam, index, des, event) => {
@@ -25,7 +21,7 @@ const editLabel = (todosParam, index, des, event) => {
   des.parentNode.parentNode.classList.remove('edit');
 
   todosParam[index].description = event.target.value;
-  deleteTodo(todosParam, event);
+  deleteTodo(todosParam);
 };
 
 export const editTodoDescription = (todos) => {
@@ -36,14 +32,9 @@ export const editTodoDescription = (todos) => {
       description.nextElementSibling.value = todos[index].description;
       description.nextElementSibling.classList.add('show');
       description.parentNode.parentNode.classList.add('edit');
-      description.parentNode.parentNode.lastElementChild.classList.toggle(
-        'hide'
-      );
+      description.parentNode.parentNode.lastElementChild.classList.toggle('hide');
 
-      description.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
-        'hide'
-      );
-
+      description.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove('hide');
       description.classList.add('hide');
 
       description.nextElementSibling.addEventListener('keyup', (event) => {
@@ -59,33 +50,8 @@ export const editTodoDescription = (todos) => {
   });
 };
 
-generateTodo = (todos) => {
-  const todoParent = document.getElementById('parent');
-  let listItem = '';
-  todos.forEach((todo) => {
-    if (todo.completed === true) {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
-      <input id=${todo.description} name="todo"></input></div>
-      <i class="fas fa-trash-alt ic hide"></i>
-      <i class="fas fa-ellipsis-v ic"></i>
-
-      </li> `;
-    } else {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
-      <input id=${todo.description} name="todo"></input></div>
-      <i class="fas fa-trash-alt ic hide"></i>
-      <i class="fas fa-ellipsis-v ic"></i>
-
-      </li> `;
-    }
-    todoParent.childNodes[2].innerHTML = listItem;
-  });
-  updateCompletedStatus(todos);
-  editTodoDescription(todos);
-};
-
 export const addNewTodo = (todos) => {
-  const addInput = document.getElementById('add');
+  const addInput = document.getElementById('mxqrz');
   const todo = new Todo(addInput.value, false, todos.length);
   todos.push(todo);
 };

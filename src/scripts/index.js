@@ -42,7 +42,7 @@ const createAddTodoForm = () => {
   const submitButton = document.createElement('input');
 
   addTodoForm.classList.add('handb');
-  addInput.id = 'add';
+  addInput.id = 'mxqrz';
   addInput.placeholder = 'Add to your list...';
   submitButton.type = 'submit';
   submitButton.id = 'submit';
@@ -86,8 +86,7 @@ const createTodoList = () => {
     addNewTodo(todos);
     generateTodoTemplate(todos);
     storage.setItem('todos', JSON.stringify(todos));
-    updateCompletedStatus(todos);
-    addTodoForm.firstElementChild.value = '';
+    window.location.reload();
   });
 };
 
