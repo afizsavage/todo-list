@@ -11,6 +11,7 @@ const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
 const addTodoForm = document.createElement('form');
+const button = document.createElement('button');
 
 todoParent.id = 'parent';
 
@@ -89,21 +90,28 @@ const createTodoList = () => {
 
 const addCompletedButton = () => {
   const parentElement = document.createElement('div');
-  const button = document.createElement('button');
 
   parentElement.className = 'btnp';
   button.textContent = 'Clear all completed';
   parentElement.appendChild(button);
   todoParent.appendChild(parentElement);
+
+  // notCompleted.forEach((item, index) => list.children[index].remove());
 };
+
+button.addEventListener('click', () => {
+  const notCompleted = todos.filter((todo) => !todo.completed);
+  storage.setItem('todos', JSON.stringify(notCompleted));
+  window.location.reload();
+});
 
 const load = () => {
   addTodoHeader();
   createAddTodoForm();
   createTodoList();
-  addCompletedButton();
   updateCompletedStatus(todos);
   editTodoDescription(todos);
+  addCompletedButton();
 };
 
 window.onload = load;
