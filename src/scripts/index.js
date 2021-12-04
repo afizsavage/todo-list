@@ -60,11 +60,13 @@ const generateTodoTemplate = (todoParam) => {
     if (todo.completed === true) {
       listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
       <input id=${todo.description} name="todo"></input></div>
+      <i class="fas fa-trash-alt ic hide"></i>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     } else {
       listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
       <input id=${todo.description} name="todo"></input></div>
+      <i class="fas fa-trash-alt ic hide"></i>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     }

@@ -23,6 +23,7 @@ const editLabel = (todosParam, index, des, event) => {
   event.target.classList.remove('show');
   des.classList.remove('hide');
   des.parentNode.parentNode.classList.remove('edit');
+
   todosParam[index].description = event.target.value;
   deleteTodo(todosParam, event);
 };
@@ -34,7 +35,16 @@ export const editTodoDescription = (todos) => {
     description.addEventListener('click', () => {
       description.nextElementSibling.classList.add('show');
       description.parentNode.parentNode.classList.add('edit');
+      description.parentNode.parentNode.lastElementChild.classList.toggle(
+        'hide'
+      );
+
+      description.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
+        'hide'
+      );
+
       description.classList.add('hide');
+
       description.nextElementSibling.addEventListener('keyup', (event) => {
         if (event.keyCode === 13) {
           event.preventDefault();
@@ -55,12 +65,16 @@ generateTodo = (todos) => {
     if (todo.completed === true) {
       listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
       <input id=${todo.description} name="todo"></input></div>
+      <i class="fas fa-trash-alt ic hide"></i>
       <i class="fas fa-ellipsis-v ic"></i>
+
       </li> `;
     } else {
       listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
       <input id=${todo.description} name="todo"></input></div>
+      <i class="fas fa-trash-alt ic hide"></i>
       <i class="fas fa-ellipsis-v ic"></i>
+
       </li> `;
     }
     todoParent.childNodes[2].innerHTML = listItem;
