@@ -87,6 +87,7 @@ const createTodoList = () => {
     generateTodoTemplate(todos);
     storage.setItem('todos', JSON.stringify(todos));
     updateCompletedStatus(todos);
+    addTodoForm.firstElementChild.value = '';
   });
 };
 
@@ -97,8 +98,6 @@ const addCompletedButton = () => {
   button.textContent = 'Clear all completed';
   parentElement.appendChild(button);
   todoParent.appendChild(parentElement);
-
-  // notCompleted.forEach((item, index) => list.children[index].remove());
 };
 
 const clearAllCompleted = () => {

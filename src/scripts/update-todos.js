@@ -33,6 +33,7 @@ export const editTodoDescription = (todos) => {
 
   descriptions.forEach((description, index) => {
     description.addEventListener('click', () => {
+      description.nextElementSibling.value = todos[index].description;
       description.nextElementSibling.classList.add('show');
       description.parentNode.parentNode.classList.add('edit');
       description.parentNode.parentNode.lastElementChild.classList.toggle(
