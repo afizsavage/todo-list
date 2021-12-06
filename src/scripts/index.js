@@ -3,24 +3,24 @@ import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
-import updateCompletedStatus from './todo-status.js';
 
-const todosArray = [
-  { description: 'Build house', completed: false, index: 0 },
-  { description: 'Build car', completed: false, index: 1 },
-  { description: 'Party', completed: false, index: 2 },
-];
+import updateCompletedStatus from './todo-status.js';
+import { addNewTodo, editTodoDescription } from './update-todos.js';
+
 const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
-const storedTodos = JSON.parse(storage.getItem('todos'));
+const addTodoForm = document.createElement('form');
+const button = document.createElement('button');
 
 todoParent.id = 'parent';
 
 let todos;
 if (storage.getItem('todos') === null) {
-  todos = todosArray;
+  todos = [];
 } else {
+  const storedTodos = JSON.parse(storage.getItem('todos'));
+
   todos = [...storedTodos];
 }
 
@@ -38,46 +38,60 @@ const addTodoHeader = () => {
 };
 
 const createAddTodoForm = () => {
-  const addTodoForm = document.createElement('form');
   const addInput = document.createElement('input');
   const submitButton = document.createElement('input');
 
   addTodoForm.classList.add('handb');
-  addInput.id = 'add';
+  addInput.id = 'mxqrz';
   addInput.placeholder = 'Add to your list...';
   submitButton.type = 'submit';
   submitButton.id = 'submit';
   submitButton.title = 'Click this or press enter to submit';
-  submitButton.className = 'fas fa-level-down-alt trn';
 
   addTodoForm.appendChild(addInput);
   addTodoForm.appendChild(submitButton);
   todoParent.appendChild(addTodoForm);
 };
 
-const createTodoList = () => {
+const generateTodoTemplate = (todoParam) => {
   let listItem = '';
 
-  todos.forEach((todo) => {
+  todoParam.forEach((todo) => {
     if (todo.completed === true) {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for="todo">${todo.description}</label>
-      <textarea id="todo" name="todo"></textarea></div>
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
+      <input id=${todo.description} name="todo"></input></div>
+      <i class="fas fa-trash-alt ic hide"></i>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     } else {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for="todo">${todo.description}</label>
-      <textarea id="todo" name="todo"></textarea></div>
+      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
+      <input id=${todo.description} name="todo"></input></div>
+      <i class="fas fa-trash-alt ic hide"></i>
       <i class="fas fa-ellipsis-v ic"></i>
       </li> `;
     }
     list.innerHTML = listItem;
   });
+
+  editTodoDescription(todoParam);
+};
+
+const createTodoList = () => {
+  // const listItem = '';
+
+  generateTodoTemplate(todos);
   todoParent.appendChild(list);
+  addTodoForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    addNewTodo(todos);
+    generateTodoTemplate(todos);
+    storage.setItem('todos', JSON.stringify(todos));
+    window.location.reload();
+  });
 };
 
 const addCompletedButton = () => {
   const parentElement = document.createElement('div');
-  const button = document.createElement('button');
 
   parentElement.className = 'btnp';
   button.textContent = 'Clear all completed';
@@ -85,12 +99,23 @@ const addCompletedButton = () => {
   todoParent.appendChild(parentElement);
 };
 
+const clearAllCompleted = () => {
+  const notCompleted = todos.filter((todo) => !todo.completed);
+  storage.setItem('todos', JSON.stringify(notCompleted));
+  window.location.reload();
+};
+
+button.addEventListener('click', () => {
+  clearAllCompleted();
+});
+
 const load = () => {
   addTodoHeader();
   createAddTodoForm();
   createTodoList();
-  addCompletedButton();
   updateCompletedStatus(todos);
+  editTodoDescription(todos);
+  addCompletedButton();
 };
 
 window.onload = load;
