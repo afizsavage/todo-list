@@ -77,16 +77,12 @@ const generateTodoTemplate = (todoParam) => {
 };
 
 const createTodoList = () => {
-  // const listItem = '';
-
   generateTodoTemplate(todos);
   todoParent.appendChild(list);
-  addTodoForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+  addTodoForm.addEventListener('submit', () => {
     addNewTodo(todos);
     generateTodoTemplate(todos);
     storage.setItem('todos', JSON.stringify(todos));
-    window.location.reload();
   });
 };
 
