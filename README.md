@@ -14,6 +14,10 @@ The application has functionality to add, remove, mark as completed, and reorder
 - CSS
 - Javascript
 
+## Live Demo
+
+- [Demo](https://afizsavage.github.io/todo-list/)
+
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
