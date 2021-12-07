@@ -16,7 +16,7 @@ body {
 
 #parent {
   list-style: none;
-  width: 30%;
+  width: 90%;
   background: #fff;
   box-sizing: border-box;
   border-radius: 3px;
@@ -176,4 +176,10 @@ ul {
 
 form.handb {
   padding-right: 0;
+}
+
+@media (min-width: 992px) {
+  #parent {
+    width: 30%;
+  }
 }
