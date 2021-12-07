@@ -7,11 +7,8 @@ import '@fortawesome/fontawesome-free/js/brands.js';
 import updateCompletedStatus from './todo-status.js';
 import { addNewTodo, editTodoDescription } from './update-todos.js';
 
-const list = document.createElement('ul');
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
-const addTodoForm = document.createElement('form');
-const button = document.createElement('button');
 
 todoParent.id = 'parent';
 
@@ -24,94 +21,127 @@ if (storage.getItem('todos') === null) {
   todos = [...storedTodos];
 }
 
-const addTodoHeader = () => {
-  const headerParent = document.createElement('div');
-  const heading = document.createElement('h1');
-  const refreshIcon = document.createElement('i');
+const todoHeader = () => {
+  const markup = `<div class="handb"><h1>Today's To Do</h1>
+  <i class="fas fa-sync"></i>
+  </div>`;
 
-  headerParent.classList.add('handb');
-  refreshIcon.className = 'fas fa-sync';
-  heading.textContent = 'Today,s To Do';
-  headerParent.appendChild(heading);
-  headerParent.appendChild(refreshIcon);
-  todoParent.appendChild(headerParent);
+  return markup;
 };
 
-const createAddTodoForm = () => {
-  const addInput = document.createElement('input');
-  const submitButton = document.createElement('input');
+const addTodoForm = () => {
+  const markup = `<form class="handb"><input id="mxqrz" placeholder="Add to your list...">
+  </input><input type="submit" id="submit" title="Click this or press enter to submit"></input> </form>`;
 
-  addTodoForm.classList.add('handb');
-  addInput.id = 'mxqrz';
-  addInput.placeholder = 'Add to your list...';
-  submitButton.type = 'submit';
-  submitButton.id = 'submit';
-  submitButton.title = 'Click this or press enter to submit';
-
-  addTodoForm.appendChild(addInput);
-  addTodoForm.appendChild(submitButton);
-  todoParent.appendChild(addTodoForm);
+  return markup;
 };
 
-const generateTodoTemplate = (todoParam) => {
-  let listItem = '';
+const todoItem = (todo, className = 'tick') => {
+  const listMarkup = `<li class="handb txtarea"> <button type="button" class=${className}></button> <div class="center"><label for=${todo.description}>${todo.description}</label>
+  <input id=${todo.description} name="todo"></input></div>
+  <i class="fas fa-trash-alt ic hide"></i>
+  <i class="fas fa-ellipsis-v ic"></i>
+  </li>`;
 
-  todoParam.forEach((todo) => {
-    if (todo.completed === true) {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
-      <input id=${todo.description} name="todo"></input></div>
-      <i class="fas fa-trash-alt ic hide"></i>
-      <i class="fas fa-ellipsis-v ic"></i>
-      </li> `;
+  return listMarkup;
+};
+
+const clearAllCompletedBtn = () => {
+  const markup = `<div class="btnp"><button>Clear all completed
+  </button></div>`;
+
+  return markup;
+};
+
+const generateTodoList = (todosArg) => {
+  const list = document.createElement('ul');
+
+  let listItems = '';
+  todosArg.forEach((todo) => {
+    if (todo.completed) {
+      listItems += todoItem(todo, 'tick check');
     } else {
-      listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
-      <input id=${todo.description} name="todo"></input></div>
-      <i class="fas fa-trash-alt ic hide"></i>
-      <i class="fas fa-ellipsis-v ic"></i>
-      </li> `;
+      listItems += todoItem(todo);
     }
-    list.innerHTML = listItem;
+    list.innerHTML = listItems;
   });
 
-  editTodoDescription(todoParam);
+  return list;
 };
 
-const createTodoList = () => {
-  generateTodoTemplate(todos);
-  todoParent.appendChild(list);
-  addTodoForm.addEventListener('submit', () => {
+const generateOtherTodoElements = () => {
+  let childNodes = todoHeader();
+
+  childNodes += addTodoForm();
+  childNodes += clearAllCompletedBtn();
+
+  return childNodes;
+};
+
+const createTodoListStructure = () => {
+  let formElement;
+  let lastChild;
+  const list = generateTodoList(todos);
+
+  todoParent.innerHTML = generateOtherTodoElements();
+  lastChild = document.querySelector('#parent .btnp');
+  formElement = document.querySelector('form');
+
+  todoParent.insertBefore(list, lastChild);
+  formElement.addEventListener('submit', () => {
     addNewTodo(todos);
-    generateTodoTemplate(todos);
-    storage.setItem('todos', JSON.stringify(todos));
   });
 };
 
-const addCompletedButton = () => {
-  const parentElement = document.createElement('div');
+// const generateTodoTemplate = (todoParam) => {
+//   let listItem = '';
 
-  parentElement.className = 'btnp';
-  button.textContent = 'Clear all completed';
-  parentElement.appendChild(button);
-  todoParent.appendChild(parentElement);
-};
+//   todoParam.forEach((todo) => {
+//     if (todo.completed === true) {
+//       listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
+//       <input id=${todo.description} name="todo"></input></div>
+//       <i class="fas fa-trash-alt ic hide"></i>
+//       <i class="fas fa-ellipsis-v ic"></i>
+//       </li> `;
+//     } else {
+//       listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
+//       <input id=${todo.description} name="todo"></input></div>
+//       <i class="fas fa-trash-alt ic hide"></i>
+//       <i class="fas fa-ellipsis-v ic"></i>
+//       </li> `;
+//     }
+//     list.innerHTML = listItem;
+//   });
 
-const clearAllCompleted = () => {
-  const notCompleted = todos.filter((todo) => !todo.completed);
-  storage.setItem('todos', JSON.stringify(notCompleted));
-  window.location.reload();
-};
+//   editTodoDescription(todoParam);
+// };
 
-button.addEventListener('click', () => {
-  clearAllCompleted();
-});
+// const createTodoList = () => {
+//   generateTodoTemplate(todos);
+//   todoParent.appendChild(list);
+//   formElement.addEventListener('submit', () => {
+//     addNewTodo(todos);
+//     generateTodoTemplate(todos);
+//     storage.setItem('todos', JSON.stringify(todos));
+//   });
+// };
+
+// const clearAllCompleted = () => {
+//   const notCompleted = todos.filter((todo) => !todo.completed);
+//   storage.setItem('todos', JSON.stringify(notCompleted));
+//   window.location.reload();
+// };
+
+// button.addEventListener('click', () => {
+//   clearAllCompleted();
+// });
 
 const load = () => {
-  addTodoHeader();
-  createAddTodoForm();
-  createTodoList();
-  updateCompletedStatus(todos);
-  editTodoDescription(todos);
-  addCompletedButton();
+  createTodoListStructure();
+  // createTodoList();
+  // updateCompletedStatus(todos);
+  // editTodoDescription(todos);
+  // addCompletedButton();
 };
 
 window.onload = load;

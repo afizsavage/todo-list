@@ -32,9 +32,13 @@ export const editTodoDescription = (todos) => {
       description.nextElementSibling.value = todos[index].description;
       description.nextElementSibling.classList.add('show');
       description.parentNode.parentNode.classList.add('edit');
-      description.parentNode.parentNode.lastElementChild.classList.toggle('hide');
+      description.parentNode.parentNode.lastElementChild.classList.toggle(
+        'hide'
+      );
 
-      description.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove('hide');
+      description.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
+        'hide'
+      );
       description.classList.add('hide');
 
       description.nextElementSibling.addEventListener('keyup', (event) => {
@@ -53,5 +57,6 @@ export const editTodoDescription = (todos) => {
 export const addNewTodo = (todos) => {
   const addInput = document.getElementById('mxqrz');
   const todo = new Todo(addInput.value, false, todos.length);
-  todos.push(todo);
+  const updated = [...todos, todo];
+  storage.setItem('todos', JSON.stringify(updated));
 };
