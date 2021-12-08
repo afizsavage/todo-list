@@ -26,16 +26,35 @@ export const editTodoDescription = (todos, index, event) => {
   storage.setItem('todos', JSON.stringify(updatedTodos));
 };
 
-export const openTodoDescriptionEditField = (label, todos, index) => {
-  label.nextElementSibling.value = todos[index].description;
-  label.nextElementSibling.classList.add('show');
-  label.parentNode.parentNode.classList.add('edit');
-  label.parentNode.parentNode.lastElementChild.classList.toggle('hide');
+export const toggleTodoDescriptionEditField = (
+  targetElement,
+  todos,
+  index,
+  activate = false
+) => {
+  if (activate === true) {
+    targetElement.nextElementSibling.value = todos[index].description;
+    targetElement.nextElementSibling.classList.add('show');
+    targetElement.nextElementSibling.focus();
+    targetElement.parentNode.parentNode.classList.add('edit');
+    targetElement.parentNode.parentNode.lastElementChild.classList.add('hide');
 
-  label.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
-    'hide'
-  );
-  label.classList.add('hide');
+    targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
+      'hide'
+    );
+    targetElement.classList.add('hide');
+  } else {
+    targetElement.previousElementSibling.classList.remove('hide');
+    targetElement.parentNode.parentNode.classList.remove('edit');
+    targetElement.parentNode.parentNode.lastElementChild.classList.remove(
+      'hide'
+    );
+
+    targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.add(
+      'hide'
+    );
+    targetElement.classList.remove('show');
+  }
 };
 
 // export const editLabel = (todosParam, index, des, event) => {
@@ -49,7 +68,7 @@ export const openTodoDescriptionEditField = (label, todos, index) => {
 // };
 
 // export const editTodoDescription = (todos) => {
-//   const descriptions = document.querySelectorAll('.center label');
+//   const descriptions = document.querySelectorAll('.center targetElement');
 
 //   descriptions.forEach((description, index) => {
 //     description.addEventListener('click', () => {

@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/js/brands.js';
 import {
   addNewTodo,
   editTodoDescription,
-  openTodoDescriptionEditField,
+  toggleTodoDescriptionEditField,
 } from './update-todos.js';
 import {
   updateListDomAsCompleted,
@@ -96,11 +96,13 @@ const createTodoListStructure = () => {
   let lastChild;
   let checkboxes;
   let descriptionLabels;
+  let editInput;
   const list = generateTodoList(todos);
 
   todoParent.innerHTML = generateOtherTodoElements();
   lastChild = document.querySelector('#parent .btnp');
   formElement = document.querySelector('form');
+  editInput = document.querySelectorAll;
 
   todoParent.insertBefore(list, lastChild);
   checkboxes = document.querySelectorAll('.tick');
@@ -119,7 +121,12 @@ const createTodoListStructure = () => {
 
   descriptionLabels.forEach((label, index) => {
     label.addEventListener('click', (event) => {
-      openTodoDescriptionEditField(event.target, todos, index);
+      event.preventDefault();
+      toggleTodoDescriptionEditField(event.target, todos, index, true);
+    });
+
+    label.nextElementSibling.addEventListener('blur', (event) => {
+      toggleTodoDescriptionEditField(event.target, todos, index);
     });
   });
 };
