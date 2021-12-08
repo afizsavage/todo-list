@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/js/brands.js';
 
 import {
   addNewTodo,
+  conditionallyDeleteTodoItem,
   editTodoDescription,
   toggleTodoDescriptionEditField,
 } from './update-todos.js';
@@ -91,22 +92,23 @@ const generateOtherTodoElements = () => {
   return childNodes;
 };
 
+const clearAllCompleted = () => {
+  const notCompleted = todos.filter((todo) => !todo.completed);
+  storage.setItem('todos', JSON.stringify(notCompleted));
+  window.location.reload();
+};
+
 const createTodoListStructure = () => {
-  let formElement;
-  let lastChild;
-  let checkboxes;
-  let descriptionLabels;
-  let editInput;
   const list = generateTodoList(todos);
 
   todoParent.innerHTML = generateOtherTodoElements();
-  lastChild = document.querySelector('#parent .btnp');
-  formElement = document.querySelector('form');
-  editInput = document.querySelectorAll;
+  const lastChild = document.querySelector('#parent .btnp');
+  const formElement = document.querySelector('form');
+  const clearCompletedBtn = document.querySelector('.btnp button');
 
   todoParent.insertBefore(list, lastChild);
-  checkboxes = document.querySelectorAll('.tick');
-  descriptionLabels = document.querySelectorAll('.center label');
+  const checkboxes = document.querySelectorAll('.tick');
+  const descriptionLabels = document.querySelectorAll('.center label');
 
   formElement.addEventListener('submit', () => {
     addNewTodo(todos);
@@ -126,60 +128,26 @@ const createTodoListStructure = () => {
     });
 
     label.nextElementSibling.addEventListener('blur', (event) => {
+      editTodoDescription(todos, index, event);
+      conditionallyDeleteTodoItem(todos, event.target);
       toggleTodoDescriptionEditField(event.target, todos, index);
     });
+
+    label.nextElementSibling.addEventListener('keyup', (event) => {
+      if (event.keyCode === 13) {
+        editTodoDescription(todos, index, event);
+        conditionallyDeleteTodoItem(todos, event.target);
+        toggleTodoDescriptionEditField(event.target, todos, index);
+      }
+    });
+  });
+  clearCompletedBtn.addEventListener('click', () => {
+    clearAllCompleted();
   });
 };
 
-// const generateTodoTemplate = (todoParam) => {
-//   let listItem = '';
-
-//   todoParam.forEach((todo) => {
-//     if (todo.completed === true) {
-//       listItem += `<li class="handb txtarea"> <button type="button" class='tick check'></button> <div class="center"><label class="fade" for=${todo.description}>${todo.description}</label>
-//       <input id=${todo.description} name="todo"></input></div>
-//       <i class="fas fa-trash-alt ic hide"></i>
-//       <i class="fas fa-ellipsis-v ic"></i>
-//       </li> `;
-//     } else {
-//       listItem += `<li class="handb txtarea"> <button type="button" class='tick'></button> <div class="center"><label class="" for=${todo.description}>${todo.description}</label>
-//       <input id=${todo.description} name="todo"></input></div>
-//       <i class="fas fa-trash-alt ic hide"></i>
-//       <i class="fas fa-ellipsis-v ic"></i>
-//       </li> `;
-//     }
-//     list.innerHTML = listItem;
-//   });
-
-//   editTodoDescription(todoParam);
-// };
-
-// const createTodoList = () => {
-//   generateTodoTemplate(todos);
-//   todoParent.appendChild(list);
-//   formElement.addEventListener('submit', () => {
-//     addNewTodo(todos);
-//     generateTodoTemplate(todos);
-//     storage.setItem('todos', JSON.stringify(todos));
-//   });
-// };
-
-// const clearAllCompleted = () => {
-//   const notCompleted = todos.filter((todo) => !todo.completed);
-//   storage.setItem('todos', JSON.stringify(notCompleted));
-//   window.location.reload();
-// };
-
-// button.addEventListener('click', () => {
-//   clearAllCompleted();
-// });
-
 const load = () => {
   createTodoListStructure();
-  // createTodoList();
-  // updateCompletedStatus(todos);
-  // editTodoDescription(todos);
-  // addCompletedButton();
 };
 
 window.onload = load;

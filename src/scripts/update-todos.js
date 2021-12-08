@@ -26,11 +26,22 @@ export const editTodoDescription = (todos, index, event) => {
   storage.setItem('todos', JSON.stringify(updatedTodos));
 };
 
+const removeDeletedItemFromDom = () => {
+  window.location.reload();
+};
+
+export const conditionallyDeleteTodoItem = (todos, item) => {
+  if (item.value.length < 1) {
+    deleteTodoItem(todos);
+    removeDeletedItemFromDom();
+  }
+};
+
 export const toggleTodoDescriptionEditField = (
   targetElement,
   todos,
   index,
-  activate = false
+  activate = false,
 ) => {
   if (activate === true) {
     targetElement.nextElementSibling.value = todos[index].description;
@@ -40,59 +51,20 @@ export const toggleTodoDescriptionEditField = (
     targetElement.parentNode.parentNode.lastElementChild.classList.add('hide');
 
     targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
-      'hide'
+      'hide',
     );
     targetElement.classList.add('hide');
   } else {
+    targetElement.previousElementSibling.textContent = todos[index].description;
     targetElement.previousElementSibling.classList.remove('hide');
     targetElement.parentNode.parentNode.classList.remove('edit');
     targetElement.parentNode.parentNode.lastElementChild.classList.remove(
-      'hide'
+      'hide',
     );
 
     targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.add(
-      'hide'
+      'hide',
     );
     targetElement.classList.remove('show');
   }
 };
-
-// export const editLabel = (todosParam, index, des, event) => {
-//   event.preventDefault();
-//   event.target.classList.remove('show');
-//   des.classList.remove('hide');
-//   des.parentNode.parentNode.classList.remove('edit');
-
-//   todosParam[index].description = event.target.value;
-//   deleteTodoItem(todosParam);
-// };
-
-// export const editTodoDescription = (todos) => {
-//   const descriptions = document.querySelectorAll('.center targetElement');
-
-//   descriptions.forEach((description, index) => {
-//     description.addEventListener('click', () => {
-//       description.nextElementSibling.value = todos[index].description;
-//       description.nextElementSibling.classList.add('show');
-//       description.parentNode.parentNode.classList.add('edit');
-//       description.parentNode.parentNode.lastElementChild.classList.toggle(
-//         'hide'
-//       );
-
-//       description.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
-//         'hide'
-//       );
-//       description.classList.add('hide');
-
-//       description.nextElementSibling.addEventListener('keyup', (event) => {
-//         if (event.keyCode === 13) {
-//           event.preventDefault();
-//           editLabel(todos, index, description, event);
-//         }
-//       });
-//       description.nextElementSibling.addEventListener('blur', (event) => {
-//         editLabel(todos, index, description, event);
-//       });
-//     });
-//   });
-// };
