@@ -4,7 +4,11 @@ import '@fortawesome/fontawesome-free/js/solid.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
 
-import { addNewTodo, editTodoDescription } from './update-todos.js';
+import {
+  addNewTodo,
+  editTodoDescription,
+  openTodoDescriptionEditField,
+} from './update-todos.js';
 import {
   updateListDomAsCompleted,
   updateTodoCompletedStatus,
@@ -91,6 +95,7 @@ const createTodoListStructure = () => {
   let formElement;
   let lastChild;
   let checkboxes;
+  let descriptionLabels;
   const list = generateTodoList(todos);
 
   todoParent.innerHTML = generateOtherTodoElements();
@@ -99,6 +104,7 @@ const createTodoListStructure = () => {
 
   todoParent.insertBefore(list, lastChild);
   checkboxes = document.querySelectorAll('.tick');
+  descriptionLabels = document.querySelectorAll('.center label');
 
   formElement.addEventListener('submit', () => {
     addNewTodo(todos);
@@ -108,6 +114,12 @@ const createTodoListStructure = () => {
     checkbox.addEventListener('click', (event) => {
       updateListDomAsCompleted(event.target);
       updateTodoCompletedStatus(todos, index, event.target);
+    });
+  });
+
+  descriptionLabels.forEach((label, index) => {
+    label.addEventListener('click', (event) => {
+      openTodoDescriptionEditField(event.target, todos, index);
     });
   });
 };
