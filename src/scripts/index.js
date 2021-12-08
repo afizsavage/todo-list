@@ -4,22 +4,31 @@ import '@fortawesome/fontawesome-free/js/solid.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
 
-import updateCompletedStatus from './todo-status.js';
 import { addNewTodo, editTodoDescription } from './update-todos.js';
+import {
+  updateListDomAsCompleted,
+  updateTodoCompletedStatus,
+} from './todo-status.js';
 
 const todoParent = document.querySelector('body div');
 const storage = window.localStorage;
 
 todoParent.id = 'parent';
 
-let todos;
-if (storage.getItem('todos') === null) {
-  todos = [];
-} else {
-  const storedTodos = JSON.parse(storage.getItem('todos'));
+const getTodos = () => {
+  let todos;
+  if (storage.getItem('todos') === null) {
+    todos = [];
+  } else {
+    const storedTodos = JSON.parse(storage.getItem('todos'));
 
-  todos = [...storedTodos];
-}
+    todos = [...storedTodos];
+  }
+
+  return todos;
+};
+
+const todos = getTodos();
 
 const todoHeader = () => {
   const markup = `<div class="handb"><h1>Today's To Do</h1>
@@ -36,8 +45,8 @@ const addTodoForm = () => {
   return markup;
 };
 
-const todoItem = (todo, className = 'tick') => {
-  const listMarkup = `<li class="handb txtarea"> <button type="button" class=${className}></button> <div class="center"><label for=${todo.description}>${todo.description}</label>
+const todoItem = (todo, check = '', fade = '') => {
+  const listMarkup = `<li class="handb txtarea"> <button type="button" class="tick ${check}"></button> <div class="center"><label class=${fade} for=${todo.description}>${todo.description}</label>
   <input id=${todo.description} name="todo"></input></div>
   <i class="fas fa-trash-alt ic hide"></i>
   <i class="fas fa-ellipsis-v ic"></i>
@@ -58,8 +67,8 @@ const generateTodoList = (todosArg) => {
 
   let listItems = '';
   todosArg.forEach((todo) => {
-    if (todo.completed) {
-      listItems += todoItem(todo, 'tick check');
+    if (todo.completed === true) {
+      listItems += todoItem(todo, 'check', 'fade');
     } else {
       listItems += todoItem(todo);
     }
@@ -81,6 +90,7 @@ const generateOtherTodoElements = () => {
 const createTodoListStructure = () => {
   let formElement;
   let lastChild;
+  let checkboxes;
   const list = generateTodoList(todos);
 
   todoParent.innerHTML = generateOtherTodoElements();
@@ -88,8 +98,17 @@ const createTodoListStructure = () => {
   formElement = document.querySelector('form');
 
   todoParent.insertBefore(list, lastChild);
+  checkboxes = document.querySelectorAll('.tick');
+
   formElement.addEventListener('submit', () => {
     addNewTodo(todos);
+  });
+
+  checkboxes.forEach((checkbox, index) => {
+    checkbox.addEventListener('click', (event) => {
+      updateListDomAsCompleted(event.target);
+      updateTodoCompletedStatus(todos, index, event.target);
+    });
   });
 };
 
