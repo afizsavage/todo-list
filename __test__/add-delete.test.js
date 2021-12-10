@@ -2,6 +2,7 @@
 import { updateTodoCompletedStatus } from '../src/scripts/todo-status.js';
 import {
   addNewTodo,
+  clearAllCompleted,
   deleteTodoItem,
   editTodoDescription,
 } from '../src/scripts/update-todos.js';
@@ -53,6 +54,20 @@ describe('adding and deleting todos', () => {
     ];
     const expectedRes = JSON.stringify(updatedData);
     editTodoDescription(sampleData, 0, 'build ev');
+
+    expect(localStorage.setItem).toHaveBeenLastCalledWith('todos', expectedRes);
+  });
+  test('should remove all completed tasks', () => {
+    const sampleData = [
+      { description: 'buy motor', completed: true, index: 0 },
+      { description: 'buy battery cell', completed: false, index: 0 },
+    ];
+    const updatedData = [
+      { description: 'buy battery cell', completed: false, index: 0 },
+    ];
+    const expectedRes = JSON.stringify(updatedData);
+
+    clearAllCompleted(sampleData);
 
     expect(localStorage.setItem).toHaveBeenLastCalledWith('todos', expectedRes);
   });

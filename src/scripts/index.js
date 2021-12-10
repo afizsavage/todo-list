@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/js/brands.js';
 
 import {
   addNewTodo,
+  clearAllCompleted,
   conditionallyDeleteTodoItem,
   editTodoDescription,
   toggleTodoDescriptionEditField,
@@ -92,12 +93,6 @@ const generateOtherTodoElements = () => {
   return childNodes;
 };
 
-const clearAllCompleted = () => {
-  const notCompleted = todos.filter((todo) => !todo.completed);
-  storage.setItem('todos', JSON.stringify(notCompleted));
-  window.location.reload();
-};
-
 const createTodoListStructure = () => {
   const list = generateTodoList(todos);
 
@@ -142,7 +137,7 @@ const createTodoListStructure = () => {
     });
   });
   clearCompletedBtn.addEventListener('click', () => {
-    clearAllCompleted();
+    clearAllCompleted(todos);
   });
 };
 

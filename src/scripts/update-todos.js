@@ -37,11 +37,17 @@ export const conditionallyDeleteTodoItem = (todos, item) => {
   }
 };
 
+export const clearAllCompleted = (todosParam) => {
+  const notCompleted = todosParam.filter((todo) => !todo.completed);
+  storage.setItem('todos', JSON.stringify(notCompleted));
+  window.location.reload();
+};
+
 export const toggleTodoDescriptionEditField = (
   targetElement,
   todos,
   index,
-  activate = false
+  activate = false,
 ) => {
   if (activate === true) {
     targetElement.nextElementSibling.value = todos[index].description;
@@ -51,7 +57,7 @@ export const toggleTodoDescriptionEditField = (
     targetElement.parentNode.parentNode.lastElementChild.classList.add('hide');
 
     targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
-      'hide'
+      'hide',
     );
     targetElement.classList.add('hide');
   } else {
@@ -59,11 +65,11 @@ export const toggleTodoDescriptionEditField = (
     targetElement.previousElementSibling.classList.remove('hide');
     targetElement.parentNode.parentNode.classList.remove('edit');
     targetElement.parentNode.parentNode.lastElementChild.classList.remove(
-      'hide'
+      'hide',
     );
 
     targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.add(
-      'hide'
+      'hide',
     );
     targetElement.classList.remove('show');
   }
