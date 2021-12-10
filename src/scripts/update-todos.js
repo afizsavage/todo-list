@@ -20,9 +20,9 @@ export const deleteTodoItem = (allTodo) => {
   storage.setItem('todos', JSON.stringify(updatedTodos));
 };
 
-export const editTodoDescription = (todos, index, event) => {
+export const editTodoDescription = (todos, index, value) => {
   const updatedTodos = todos.slice();
-  updatedTodos[index].description = event.target.value;
+  updatedTodos[index].description = value;
   storage.setItem('todos', JSON.stringify(updatedTodos));
 };
 
@@ -41,7 +41,7 @@ export const toggleTodoDescriptionEditField = (
   targetElement,
   todos,
   index,
-  activate = false,
+  activate = false
 ) => {
   if (activate === true) {
     targetElement.nextElementSibling.value = todos[index].description;
@@ -51,7 +51,7 @@ export const toggleTodoDescriptionEditField = (
     targetElement.parentNode.parentNode.lastElementChild.classList.add('hide');
 
     targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.remove(
-      'hide',
+      'hide'
     );
     targetElement.classList.add('hide');
   } else {
@@ -59,11 +59,11 @@ export const toggleTodoDescriptionEditField = (
     targetElement.previousElementSibling.classList.remove('hide');
     targetElement.parentNode.parentNode.classList.remove('edit');
     targetElement.parentNode.parentNode.lastElementChild.classList.remove(
-      'hide',
+      'hide'
     );
 
     targetElement.parentNode.parentNode.lastElementChild.previousElementSibling.classList.add(
-      'hide',
+      'hide'
     );
     targetElement.classList.remove('show');
   }

@@ -128,14 +128,14 @@ const createTodoListStructure = () => {
     });
 
     label.nextElementSibling.addEventListener('blur', (event) => {
-      editTodoDescription(todos, index, event);
+      editTodoDescription(todos, index, event.target.value);
       conditionallyDeleteTodoItem(todos, event.target);
       toggleTodoDescriptionEditField(event.target, todos, index);
     });
 
     label.nextElementSibling.addEventListener('keyup', (event) => {
       if (event.keyCode === 13) {
-        editTodoDescription(todos, index, event);
+        editTodoDescription(todos, index, event.target.value);
         conditionallyDeleteTodoItem(todos, event.target);
         toggleTodoDescriptionEditField(event.target, todos, index);
       }

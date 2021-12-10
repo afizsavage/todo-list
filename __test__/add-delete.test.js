@@ -46,4 +46,14 @@ describe('adding and deleting todos', () => {
     updateTodoCompletedStatus(sampleData, 0, testElement);
     expect(localStorage.setItem).toHaveBeenLastCalledWith('todos', expectedRes);
   });
+  test('should edit todo description', () => {
+    const sampleData = [{ description: 'buy ev', completed: false, index: 0 }];
+    const updatedData = [
+      { description: 'build ev', completed: false, index: 0 },
+    ];
+    const expectedRes = JSON.stringify(updatedData);
+    editTodoDescription(sampleData, 0, 'build ev');
+
+    expect(localStorage.setItem).toHaveBeenLastCalledWith('todos', expectedRes);
+  });
 });
