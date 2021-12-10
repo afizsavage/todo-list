@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/js/brands.js';
 
 import {
   addNewTodo,
+  clearAllCompleted,
   conditionallyDeleteTodoItem,
   editTodoDescription,
   toggleTodoDescriptionEditField,
@@ -92,12 +93,6 @@ const generateOtherTodoElements = () => {
   return childNodes;
 };
 
-const clearAllCompleted = () => {
-  const notCompleted = todos.filter((todo) => !todo.completed);
-  storage.setItem('todos', JSON.stringify(notCompleted));
-  window.location.reload();
-};
-
 const createTodoListStructure = () => {
   const list = generateTodoList(todos);
 
@@ -128,21 +123,21 @@ const createTodoListStructure = () => {
     });
 
     label.nextElementSibling.addEventListener('blur', (event) => {
-      editTodoDescription(todos, index, event);
+      editTodoDescription(todos, index, event.target.value);
       conditionallyDeleteTodoItem(todos, event.target);
       toggleTodoDescriptionEditField(event.target, todos, index);
     });
 
     label.nextElementSibling.addEventListener('keyup', (event) => {
       if (event.keyCode === 13) {
-        editTodoDescription(todos, index, event);
+        editTodoDescription(todos, index, event.target.value);
         conditionallyDeleteTodoItem(todos, event.target);
         toggleTodoDescriptionEditField(event.target, todos, index);
       }
     });
   });
   clearCompletedBtn.addEventListener('click', () => {
-    clearAllCompleted();
+    clearAllCompleted(todos);
   });
 };
 

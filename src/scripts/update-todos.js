@@ -20,9 +20,9 @@ export const deleteTodoItem = (allTodo) => {
   storage.setItem('todos', JSON.stringify(updatedTodos));
 };
 
-export const editTodoDescription = (todos, index, event) => {
+export const editTodoDescription = (todos, index, value) => {
   const updatedTodos = todos.slice();
-  updatedTodos[index].description = event.target.value;
+  updatedTodos[index].description = value;
   storage.setItem('todos', JSON.stringify(updatedTodos));
 };
 
@@ -35,6 +35,12 @@ export const conditionallyDeleteTodoItem = (todos, item) => {
     deleteTodoItem(todos);
     removeDeletedItemFromDom();
   }
+};
+
+export const clearAllCompleted = (todosParam) => {
+  const notCompleted = todosParam.filter((todo) => !todo.completed);
+  storage.setItem('todos', JSON.stringify(notCompleted));
+  window.location.reload();
 };
 
 export const toggleTodoDescriptionEditField = (
